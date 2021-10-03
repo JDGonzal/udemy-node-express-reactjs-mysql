@@ -56,11 +56,21 @@ Exercises based on this site
   ```
 9. create a file in root, called "index.js"
 
-10. Finally in the stetp 7 of the course runn this
+10. Finally in the stetp 7 of the course run this
   ```bash
     node index.js
   ``` 
-  Using the Postmant locate this route "http://localhost:49146", it must show "Hello World" message 
+11. Using the Postmant locate this route "http://localhost:49146", it must show "Hello World" message 
+
+12. Enable CORS
+  ```bash
+  npm install cors --save
+  ```
+
+13. Install with npm the "mysql"
+  ```bash
+  npm install mysql --save
+  ```
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
