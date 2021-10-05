@@ -22,25 +22,25 @@ Exercises based on this site
 6. Create a DB called "mytestdb" and
   Run the query in MySQL into the "mytestdb" DB
   ```bash
-    create table dbo.Department(
+    create table mytestdb.Department(
       DepartmentId int AUTO_INCREMENT,
       DepartmentName nvarchar(500),
       PRIMERY KEY(DepartmentId))
     );
-    insert into dbo.Department(DepartmentName) values ('IT');
-    insert into dbo.Department(DepartmentName) values ('Support');
+    insert into mytestdb.Department(DepartmentName) values ('IT');
+    insert into mytestdb.Department(DepartmentName) values ('Support');
     select * from dbo.Department;
 
-    create table dbo.Employee(
+    create table mytestdb.Employee(
       EmployeeId int AUTO_INCREMENT,
       EmployeeName nvarchar(500),
       DateOfJoining datetime,
       PhotoFileName nvarchar(500),      
       PRIMERY KEY(EmployeeId))
     );
-    insert into dbo.Employee(EmployeeName, department, DateofJoining, PhotoFileName) 
+    insert into mytestdb.Employee(EmployeeName, department, DateofJoining, PhotoFileName) 
     values ('Bob','IT', '2021-06-21', 'anonymous.png');
-    select * from dbo.Employee;
+    select * from mytestdb.Employee;
   ```
 7. In the working directory activate the environment:
   ```bash
@@ -70,6 +70,11 @@ Exercises based on this site
 13. Install with npm the "mysql"
   ```bash
   npm install mysql --save
+  ```
+## Note:
+At the end run this command to up the app
+  ```bash
+  node index.js
   ```
 
 ## License
