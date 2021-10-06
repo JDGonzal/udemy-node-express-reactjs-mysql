@@ -78,11 +78,21 @@ Exercises based on this site
   npm install express-fileupload --save
   ```
 
-16. Create the React JS Projectwith npx "
+16. Create the React JS Projectwith npx 
   ```bash
   npx create-react-app my-app
   ```
 
+17.Add CSS and BUNDLE from this site 
+  [Bootstrap Getting Started](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+
+18. Install with npm the "react-router-dom"
+  ```bash
+  cd ./my-app
+  npm install react-router-dom 
+  ```
+19. Create three new files
+  home.js, deparment.js, employee.js, into the "src" directory
 ## Note:
 At the end run this command to up the app
   ```bash
