@@ -77,6 +77,12 @@ Exercises based on this site
   ```bash
   npm install express-fileupload --save
   ```
+
+16. Create the React JS Projectwith npx "
+  ```bash
+  npx create-react-app my-app
+  ```
+
 ## Note:
 At the end run this command to up the app
   ```bash
