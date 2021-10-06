@@ -71,6 +71,12 @@ Exercises based on this site
   ```bash
   npm install mysql --save
   ```
+14. create in your project a direcory called "photos", there will store the PNG pictures (ej. anonymous.png, filename.png)
+
+15. Install with npm the "express-fileupload"
+  ```bash
+  npm install express-fileupload --save
+  ```
 ## Note:
 At the end run this command to up the app
   ```bash
