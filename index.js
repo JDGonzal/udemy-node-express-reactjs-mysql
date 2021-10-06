@@ -29,7 +29,7 @@ app.get('/',(request,response)=>{
 });
 
 //****************************************/
-//----------- DEPARTMENT -----------------
+//----------- DEPARTMENT -----------------/
 //****************************************/
 app.get('/api/department',(request,response)=>{
   var query= `SELECT * from mytestdb.Department`;
@@ -97,7 +97,7 @@ app.delete('/api/department/:id',(request,response)=>{
 });
 
 //****************************************/
-//------------- EMPLOYEE -----------------
+//------------- EMPLOYEE -----------------/
 //****************************************/
 app.get('/api/employee',(request,response)=>{
   var query= `SELECT * from mytestdb.Employee`;
@@ -175,3 +175,22 @@ app.delete('/api/employee/:id',(request,response)=>{
   // in "Body" use none
   // Run again the GET option to check the list of records
 });
+
+var fileUpload = require('express-fileupload');
+var fs = require('fs');
+app.use(fileUpload());
+app.use('/photos', Express.static(__dirname+'/photos'));
+
+app.post('/api/employee/savefile', (request, response)=>{
+
+  fs.writeFile('./photos/'+request.files.file.name,
+  request.files.file.data,function(err){
+    if(err){
+      return
+      console.log(err);
+    }
+    response.json(request.files.file.name);
+  });
+  // To Test in Postman use POST whit this URL "http://localhost:49146/api/employee/savefile"
+  // in "Body" use form-data, put in KEY: "file", press [Select File] button
+})
