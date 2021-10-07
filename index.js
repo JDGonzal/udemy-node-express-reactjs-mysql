@@ -28,6 +28,10 @@ app.get('/',(request,response)=>{
   response.send('Hello World');
 });
 
+app.get('/api/',(request,response)=>{
+  response.send('The API is available');
+});
+
 //****************************************/
 //----------- DEPARTMENT -----------------/
 //****************************************/
