@@ -83,20 +83,31 @@ Exercises based on this site
   npx create-react-app my-app
   ```
 
-17.Add CSS and BUNDLE from this site 
+17. Add CSS and BUNDLE from this site 
   [Bootstrap Getting Started](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
 
-18. Install with npm the "react-router-dom"
+18. Install with npm the "react-router-dom" inside "my-app" directory
   ```bash
   cd ./my-app
   npm install react-router-dom 
   ```
-19. Create three new files
-  home.js, deparment.js, employee.js, into the "src" directory
-## Note:
-At the end run this command to up the app
+19. Create three new files:
+  home.js, department.js, employee.js, into the "src" directory
+
+20. Create a new file, to store the API endpoints: variables.js, into the "src" directory
+
+21. locate the icons in "https://icons.getbootstrap.com/", select "Copy HTML" option.
+After paste , do the correction of "fill-rule" by "fillRule"
+
+## Note: Run first the API before to run the APP
+At the end, run this command to up the API, to check in Postman 'http://localhost:49146/api/',
   ```bash
   node index.js
+  ```
+And run this command to up the APP, using another Terminal, to check http://localhost:3000/
+  ```bash
+  cd ./my-app
+  npm start
   ```
 
 ## License
