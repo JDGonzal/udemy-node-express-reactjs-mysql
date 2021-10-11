@@ -42,7 +42,7 @@ export class Department extends Component{
 
   editClick(dep){
     this.setState({
-      modalTitle:"Add Department",
+      modalTitle:"Edit Department",
       DepartmentId:dep.DepartmentId,
       DepartmentName:dep.DepartmentName
     })
@@ -126,10 +126,10 @@ export class Department extends Component{
           <thead>
             <tr>
               <th>
-                DepartmentId
+                Department Id
               </th>
               <th>
-                DepartmentName
+                Department Name
               </th>
               <th>
                 Options
@@ -168,7 +168,7 @@ export class Department extends Component{
               </div>
               <div className="modal-body">
                 <div className="input-group mb-3">
-                  <span className="input-group-text">DepartmentName</span>
+                  <span className="input-group-text">Department Name</span>
                   <input type="text" className="form-control" value={DepartmentName} onChange={this.onChangeDepartmentName}/>
                 </div>
                 {DepartmentId===0?
