@@ -67,7 +67,7 @@ export class Employee extends Component{
       EmployeeId:emp.EmployeeId,
       EmployeeName:emp.EmployeeName,
       Department:emp.Department,
-      DateOfJoining:emp.DateOfJoining,
+      DateOfJoining:String(emp.DateOfJoining).substring(0,10),//emp.DateOfJoining,
       PhotoFileName:emp.PhotoFileName
     })
   }
@@ -138,6 +138,20 @@ export class Employee extends Component{
     }
   }
 
+  imageUpload=(e)=>{
+    e.preventDefault();
+    const formData=new FormData();
+    formData.append("file", e.target.files[0], e.target.files[0].name);
+    fetch(variables.API_URL+this.site+'/savefile',{
+      method:'POST',
+      body:formData
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      this.setState({PhotoFileName:data})
+    })
+  }
+
   render(){
     const{
       departments,
@@ -187,7 +201,7 @@ export class Employee extends Component{
                 <td>{emp.EmployeeName}</td>
                 <td>{emp.Department}</td>
                 <td>{String(emp.DateOfJoining).substring(0,10)}</td>
-                <td>{emp.PhotoFileName}</td>
+                <td><img width="32px" height="32px" src={PhotoPath+emp.PhotoFileName} alt=""/></td>
                 <td>
                   <button type="button" className="btn btn-light mr-1" data-bs-toggle="modal" data-bs-target="#exampleModal"
                   onClick={()=>this.editClick(emp)}>
@@ -236,8 +250,10 @@ export class Employee extends Component{
                   </div>
                   <div className="p-2 w-50 bd-highlight">
                     <img width="250px" height="250px" src={PhotoPath+PhotoFileName} alt=""/>
+                    <label for="avatar">Choose a profile picture:</label>
+                    <input className="m-2" type="file" accept="image/png, image/jpeg" onChange={this.imageUpload} id="avatar" name="avatar"/>
                   </div>
-                  
+
                 </div>
                   {EmployeeId===0?
                     <button type="button" className="btn btn-primary float-start" onClick={()=>this.createClick()}>Create</button>:null
