@@ -20,6 +20,12 @@ Exercises based on this site
 5. Install Visual Studio Code
   [Visual Studio Download](https://code.visualstudio.com/insiders/)
 6. Create a DB called "mytestdb" and
+  You could create the DB using an script
+   ```bash
+    CREATE DATABASE IF NOT EXISTS mytestdb;
+
+    USE mytestdb;
+  ```
   Run the query in MySQL into the "mytestdb" DB
   ```bash
     create table mytestdb.Department(
@@ -29,7 +35,8 @@ Exercises based on this site
     );
     insert into mytestdb.Department(DepartmentName) values ('IT');
     insert into mytestdb.Department(DepartmentName) values ('Support');
-    select * from dbo.Department;
+    describe Department;
+    select * from Department;
 
     create table mytestdb.Employee(
       EmployeeId int AUTO_INCREMENT,
@@ -40,7 +47,8 @@ Exercises based on this site
     );
     insert into mytestdb.Employee(EmployeeName, department, DateofJoining, PhotoFileName) 
     values ('Bob','IT', '2021-06-21', 'anonymous.png');
-    select * from mytestdb.Employee;
+    describe Employee;
+    select * from Employee;
   ```
 7. In the working directory activate the environment:
   ```bash
@@ -99,10 +107,31 @@ Exercises based on this site
 21. locate the icons in "https://icons.getbootstrap.com/", select "Copy HTML" option.
 After paste , do the correction of "fill-rule" by "fillRule"
 
+## Improvements
+
+1. Move the files into the "api" directory
+  they are : index.js, package.json, package-lock.json, and node_modules (directory)
+
+2. Uninstall the "body-parser", it is not necessary, "express" in last version can replace this one
+  ```bash
+  cd ./api
+  npm uninstall body-parser
+  ```
+3. Install "nodemon" with "-D" in parameter, to not create a new element into "package.json" file
+  ```bash
+  cd ./api
+  npm install nodemon -D 
+  ```
+  Also I deleted all of "body-parser" from ./api/package.json and ./api/package-lock.json
+4. in package.json, put in scripts this new line
+  ```bash
+  "dev": "nodemon src/index.js"
+  ```
+
 ## Note: Run first the API before to run the APP
 At the end, run this command to up the API, to check in Postman 'http://localhost:49146/api/',
   ```bash
-  node index.js
+  npm run dev
   ```
 And run this command to up the APP, using another Terminal, to check http://localhost:3000/
   ```bash
