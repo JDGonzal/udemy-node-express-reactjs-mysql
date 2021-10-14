@@ -127,7 +127,11 @@ After paste , do the correction of "fill-rule" by "fillRule"
   ```bash
   "dev": "nodemon src/index.js"
   ```
-
+5. Intall with npm the "fastest-validator"
+  ```bash
+  cd ./api
+  npm install fastest-validator --save
+  ```  
 ## Note: Run first the API before to run the APP
 At the end, run this command to up the API, to check in Postman 'http://localhost:49146/api/',
   ```bash
