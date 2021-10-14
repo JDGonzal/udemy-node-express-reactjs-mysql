@@ -1,15 +1,18 @@
 const express = require('express');
 const { request, response } = require('express');
 const routeEmployee = express.Router();
-// var cors = require('cors');
-// routeEmployee.use(cors());
+const Validator = require('fastest-validator');
+
 const mysqlConnection = require('../database.js');
 
 routeEmployee.get('/api/employee',(request,response)=>{
   var query= `SELECT * from mytestdb.Employee`;
   mysqlConnection.query(query, (err,rows, fields) =>{
     if (err){
-      response.send('Failed');
+      response.status(501).json({
+        message: "Something went wrong",
+        error: err
+      });
     }
     response.send(rows);
   });
@@ -21,17 +24,39 @@ routeEmployee.post('/api/employee',(request,response)=>{
   var query= `INSERT into mytestdb.Employee
               (EmployeeName, Department, DateOfJoining, PhotoFileName)
               VALUE (?,?,?,?)`;
-  var values =[
-    request.body['EmployeeName'],
-    request.body['Department'], 
-    request.body['DateOfJoining'], 
-    request.body['PhotoFileName']
-  ];
-  mysqlConnection.query(query, values, function(err,rows, fields){
+  var jsonValues ={
+    EmployeeName: request.body['EmployeeName'],
+    Department: request.body['Department'],
+    DateOfJoining: new Date(request.body['DateOfJoining']),
+    PhotoFileName: request.body['PhotoFileName'],
+  };
+  const schema = {
+    EmployeeName:{type:"string", optional:false, max:"100", min:"3"},
+    Department:{type:"string", optional:false, max:"100", min:"2"},
+    DateOfJoining:{type:"date", optional:false},
+    PhotoFileName:{type:"string", optional:false, max:"50", min:"5"}
+  }
+  const v= new Validator();
+  const validationResponse = v.validate(jsonValues,schema);
+
+  if (validationResponse !== true){
+    return response.status(400).json({
+      message: "Validation Failed",
+      errors: validationResponse
+    });
+  }
+  var arrayValues=Object.values(jsonValues);
+
+  mysqlConnection.query(query, arrayValues, function(err,rows, fields){
     if (err){
-      response.send('Failed');
+      response.status(501).json({
+        message: "Something went wrong",
+        error: err
+      });
     }
-    response.json('Added Successfully');
+    response.status(201).json({
+      message: "Added Successfully",
+    });
   });
   // To Test in Postman use POST with this URL "http://localhost:49146/api/employee"
   // in "Body" use raw and select JSON, put this JSON: {"EmployeetName": "Max", "Department": "Support", 
@@ -46,18 +71,43 @@ routeEmployee.put('/api/employee',(request,response)=>{
                DateOfJoining=?,
                PhotoFileName=?
                where EmployeeId=?`;
-  var values =[
-    request.body['EmployeeName'],
-    request.body['Department'],
-    request.body['DateOfJoining'],
-    request.body['PhotoFileName'],
-    request.body['EmployeeId']
-  ];
-  mysqlConnection.query(query, values, function(err,rows, fields){
+  
+  var jsonValues ={
+    EmployeeName: request.body['EmployeeName'],
+    Department: request.body['Department'],
+    DateOfJoining: new Date(request.body['DateOfJoining']),
+    PhotoFileName: request.body['PhotoFileName'],
+    EmployeeId: request.body['EmployeeId']
+  };
+
+  const schema = {
+    EmployeeName:{type:"string", optional:false, max:"100", min:"3"},
+    Department:{type:"string", optional:false, max:"100", min:"2"},
+    DateOfJoining:{type:"date", optional:false},
+    PhotoFileName:{type:"string", optional:false, max:"50", min:"5"},
+    EmployeeId:{type:"number", optional:false}
+  }
+  const v= new Validator();
+  const validationResponse = v.validate(jsonValues,schema);
+
+  if (validationResponse !== true){
+    return response.status(400).json({
+      message: "Validation Failed",
+      errors: validationResponse
+    });
+  }
+  var arrayValues=Object.values(jsonValues);
+
+  mysqlConnection.query(query, arrayValues, function(err,rows, fields){
     if (err){
-      response.send('Failed');
+      response.status(501).json({
+        message: "Something went wrong",
+        error: err
+      });
     }
-    response.json('Updated Successfully');
+    response.status(200).json({
+      message: "Updated Successfully",
+    });
   });
   // To Test in Postman use PUT with this URL "http://localhost:49146/api/employee"
   // in "Body" use raw and select JSON, put this JSON:{"EmployeeId": 2,"EmployeeName": "Sam",
@@ -73,9 +123,14 @@ routeEmployee.delete('/api/employee/:id',(request,response)=>{
   ];
   mysqlConnection.query(query, values, function(err,rows, fields){
     if (err){
-      response.send('Failed');
+      response.status(501).json({
+        message: "Something went wrong",
+        error: err
+      });
     }
-    response.json('Deleted Successfully');
+    response.status(200).json({
+      message: "Deleted Successfully",
+    });
   });
   // To Test in Postman use DELETE with this URL "http://localhost:49146/api/Employee/2"
   // in "Body" use none
