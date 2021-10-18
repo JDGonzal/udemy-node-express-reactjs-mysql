@@ -3,9 +3,12 @@ const { request, response } = require('express');
 const routeDepartment = express.Router();
 const Validator = require('fastest-validator');
 
+// Import middlewares
+const auth = require('../middleware/auth.js');
+const { admin, editor, viewer } = require("../middleware/roles.js");
 const mysqlConnection = require('../database.js');
 
-routeDepartment.get('/api/department',(request,response)=>{
+routeDepartment.get('/api/department', [auth, viewer], (request,response)=>{
   var query= `SELECT * from mytestdb.Department`;
   mysqlConnection.query(query, function(err,rows, fields){
     if (err){
@@ -20,7 +23,7 @@ routeDepartment.get('/api/department',(request,response)=>{
   // in "Body" use none
 });
 
-routeDepartment.post('/api/department',(request,response)=>{
+routeDepartment.post('/api/department', [auth, editor], (request,response)=>{
   var query= `INSERT into mytestdb.Department
               (DepartmentName)
               VALUE (?)`;
@@ -56,7 +59,7 @@ routeDepartment.post('/api/department',(request,response)=>{
   // Run again the GET option to check the list of records
 });
 
-routeDepartment.put('/api/department',(request,response)=>{
+routeDepartment.put('/api/department', [auth, editor], (request,response)=>{
   var query= `UPDATE mytestdb.Department
                set DepartmentName=? where DepartmentId=?`;
   var jsonValues ={
@@ -93,7 +96,7 @@ routeDepartment.put('/api/department',(request,response)=>{
   // Run again the GET option to check the list of records
 });
 
-routeDepartment.delete('/api/department/:id',(request,response)=>{
+routeDepartment.delete('/api/department/:id', [auth, admin], (request,response)=>{
   var query= `DELETE from mytestdb.Department
                where DepartmentId=?`;
   var values =[

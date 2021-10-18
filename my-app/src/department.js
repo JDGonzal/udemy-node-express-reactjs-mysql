@@ -15,9 +15,11 @@ export class Department extends Component{
       
       DepartmentIdFilter:"",
       DepartmentNameFilter:"",
-      departmentsWithoutFilter:[]
+      departmentsWithoutFilter:[],
+      Token:localStorage.getItem("Token")
     }
-    this.site="department"
+    this.site="department";
+    this.alertMessage = 'Please Login before to acces this site';
   }
 
   FilterFn(){
@@ -63,11 +65,26 @@ export class Department extends Component{
   }
 
   refreshList(){
-    fetch(variables.API_URL+this.site)
-    .then(response=>response.json())
-    .then(data=>{
-      this.setState({departments:data, departmentsWithoutFilter:data})
-    })
+    if (this.state.Token === undefined || this.state.Token === null){
+      alert(this.alertMessage);
+    } else {
+      fetch(variables.API_URL+this.site,{
+        method:'GET',
+        headers:{
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+          'x-auth-token': this.state.Token
+        }
+      })
+      .then(response=>response.json())
+      .then(data=>{
+        if(data === undefined || data === null || data.ok ===false ){
+          alert(this.alertMessage)
+        }else{
+          this.setState({departments:data});
+        }
+      })
+    };
   }
 
   componentDidMount(){
@@ -161,7 +178,6 @@ export class Department extends Component{
       DepartmentName,
       DepartmentId
     }=this.state;
-
     return(
       <div>
         <button type="button" className="btn btn-primary m-2 float-end" data-bs-toggle="modal" data-bs-target="#exampleModal"

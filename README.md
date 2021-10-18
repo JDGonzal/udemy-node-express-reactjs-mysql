@@ -21,18 +21,18 @@ Exercises based on this site
   [Visual Studio Download](https://code.visualstudio.com/insiders/)
 6. Create a DB called "mytestdb" and
   You could create the DB using an script
-   ```bash
+  ```sql
     CREATE DATABASE IF NOT EXISTS mytestdb;
 
     USE mytestdb;
   ```
   Run the query in MySQL into the "mytestdb" DB
-  ```bash
+  ```sql
     create table mytestdb.Department(
       DepartmentId int AUTO_INCREMENT,
       DepartmentName nvarchar(500),
-      PRIMERY KEY(DepartmentId))
-    );
+      PRIMARY KEY(DepartmentId));
+
     insert into mytestdb.Department(DepartmentName) values ('IT');
     insert into mytestdb.Department(DepartmentName) values ('Support');
     describe Department;
@@ -41,10 +41,11 @@ Exercises based on this site
     create table mytestdb.Employee(
       EmployeeId int AUTO_INCREMENT,
       EmployeeName nvarchar(500),
+      Department nvarchar(500),
       DateOfJoining datetime,
       PhotoFileName nvarchar(500),      
-      PRIMERY KEY(EmployeeId))
-    );
+      PRIMARY KEY(EmployeeId));
+
     insert into mytestdb.Employee(EmployeeName, department, DateofJoining, PhotoFileName) 
     values ('Bob','IT', '2021-06-21', 'anonymous.png');
     describe Employee;
@@ -104,12 +105,12 @@ Exercises based on this site
 
 20. Create a new file, to store the API endpoints: variables.js, into the "src" directory
 
-21. locate the icons in "https://icons.getbootstrap.com/", select "Copy HTML" option.
+21. locate the icons in "https://icons.getbootstrap.com/", select "Copy HTML" option.<br /> 
 After paste , do the correction of "fill-rule" by "fillRule"
 
 ## Improvements
 
-1. Move the files into the "api" directory
+1. Move the files into the "api" directory <br /> 
   they are : index.js, package.json, package-lock.json, and node_modules (directory)
 
 2. Uninstall the "body-parser", it is not necessary, "express" in last version can replace this one
@@ -123,6 +124,7 @@ After paste , do the correction of "fill-rule" by "fillRule"
   npm install nodemon -D 
   ```
   Also I deleted all of "body-parser" from ./api/package.json and ./api/package-lock.json
+  
 4. in package.json, put in scripts this new line
   ```bash
   "dev": "nodemon src/index.js"
@@ -132,6 +134,24 @@ After paste , do the correction of "fill-rule" by "fillRule"
   cd ./api
   npm install fastest-validator --save
   ```  
+6. Intall with npm the "bcrypt"
+  ```bash
+  cd ./api
+  npm install bcrypt --save
+  ```
+7. Intall with npm the "jsonwebtoken"
+  ```bash
+  cd ./api
+  npm install jsonwebtoken --save
+  ```
+8. Create two new files: auth.js and roles.js, into new directory llaed "middleware"
+
+9. Create into "routes" a new file called auth.js
+
+  10. The way to use this new "token" is with a POST to "api/auth" using this json: { email: "im.user@no.matter.com", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu"} <br /> 
+  the best way to understand is with a video:
+  [How to Create a Secure REST API with Node.js and Express](https://www.youtube.com/watch?v=Tw5LupcpKS4&t=340s)
+
 ## Note: Run first the API before to run the APP
 At the end, run this command to up the API, to check in Postman 'http://localhost:49146/api/',
   ```bash

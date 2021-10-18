@@ -16,22 +16,49 @@ export class Employee extends Component{
       DateOfJoining:"", 
       PhotoFileName:"anonymous.png",
       PhotoPath:variables.PHOTO_URL,
+      Token:localStorage.getItem("Token")
     }
-    this.site="employee"
-    this.site2="department"
+    this.site="employee";
+    this.site2="department";
+    this.alertMessage = 'Please Login before to acces this site';
   }
 
   refreshList(){
-    fetch(variables.API_URL+this.site)
-    .then(response=>response.json())
-    .then(data=>{
-      this.setState({employees:data})
-    })
-    fetch(variables.API_URL+this.site2)
-    .then(response=>response.json())
-    .then(data=>{
-      this.setState({departments:data})
-    })
+    if (this.state.Token === undefined || this.state.Token === null){
+      alert(this.alertMessage);
+    } else {
+      fetch(variables.API_URL+this.site,{
+        method:'GET',
+        headers:{
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+          'x-auth-token': this.state.Token
+        }
+      })
+      .then(response=>response.json())
+      .then(data=>{
+        if (data === undefined || data === null || data.ok ===false){
+          alert(this.alertMessage)
+        } else {this.setState({employees:data})}
+      });    
+
+      fetch(variables.API_URL+this.site2,{
+        method:'GET',
+        headers:{
+          'Accept':'application/json',
+          'Content-Type':'application/json',
+          'x-auth-token': this.state.Token
+        }
+      })
+      .then(response=>response.json())
+      .then(data=>{
+        if (data !== undefined & data !== null & data.ok !==false){
+          this.setState({departments:data})
+        }
+      },(error)=>{
+        alert('Failed');
+      });
+    }
   }
 
   componentDidMount(){
