@@ -3,9 +3,12 @@ const { request, response } = require('express');
 const routeEmployee = express.Router();
 const Validator = require('fastest-validator');
 
+// Import middlewares
+const auth = require('../middleware/auth.js');
+const { admin, editor, viewer } = require("../middleware/roles.js");
 const mysqlConnection = require('../database.js');
 
-routeEmployee.get('/api/employee',(request,response)=>{
+routeEmployee.get('/api/employee', [auth, viewer], (request,response)=>{
   var query= `SELECT * from mytestdb.Employee`;
   mysqlConnection.query(query, (err,rows, fields) =>{
     if (err){
@@ -20,7 +23,7 @@ routeEmployee.get('/api/employee',(request,response)=>{
   // in "Body" use none
 });
 
-routeEmployee.post('/api/employee',(request,response)=>{
+routeEmployee.post('/api/employee', [auth, editor], (request,response)=>{
   var query= `INSERT into mytestdb.Employee
               (EmployeeName, Department, DateOfJoining, PhotoFileName)
               VALUE (?,?,?,?)`;
@@ -64,7 +67,7 @@ routeEmployee.post('/api/employee',(request,response)=>{
   // Run again the GET option to check the list of records
 });
 
-routeEmployee.put('/api/employee',(request,response)=>{
+routeEmployee.put('/api/employee', [auth, editor], (request,response)=>{
   var query= `UPDATE mytestdb.Employee
                set EmployeeName=?,
                Department=?,
@@ -115,7 +118,7 @@ routeEmployee.put('/api/employee',(request,response)=>{
   // Run again the GET option to check the list of records
 });
 
-routeEmployee.delete('/api/employee/:id',(request,response)=>{
+routeEmployee.delete('/api/employee/:id', [auth, admin], (request,response)=>{
   var query= `DELETE from mytestdb.Employee
                where EmployeeId=?`;
   var values =[

@@ -5,6 +5,7 @@ import {Department} from './department';
 import {Employee} from './employee';
 import {BrowserRouter, Route, Switch, NavLink} from 'react-router-dom';
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -16,8 +17,8 @@ function App() {
         <nav className="navbar navbar-expand-sm bg-light navbar-dark">
           <ul className="navbar-nav">
             <li className="nav-item- m-1">
-              <NavLink className="btn btn-light btn-outline-primary" to="/home">
-                Home
+              <NavLink className="btn btn-light btn-outline-primary" to="/login">
+                Login
               </NavLink>
             </li>
             <li className="nav-item- m-1">
@@ -34,7 +35,7 @@ function App() {
         </nav>
 
         <Switch>
-          <Route path='/home' component={Home}/>
+          <Route path='/login' component={Home}/>
           <Route path='/department' component={Department}/>
           <Route path='/employee' component={Employee}/>
         </Switch>
