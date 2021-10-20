@@ -11,7 +11,7 @@ Exercises based on this site
   [Nodejs Download](https://nodejs.org/en/download/current/)
 2. Check in $path or %path% the nodeJS and npm are on it
   ```bash
-  C:\Program Files\nodejs
+  C:/Program Files/nodejs
   ```
 3. Install Postman
   [Postman Download](https://www.postman.com/downloads/)
@@ -55,34 +55,35 @@ Exercises based on this site
   ```bash
   npm init -y
   ```
-8. Install express using npm
+8. Install express using npm.<br />
+  Express is minimal and flexible Node.js web applicaton framework
   ```bash
   npm install express --save
   ```
-8. Install body-parser using npm
-  ```bash
-  npm install body-parser --save
-  ```
 9. create a file in root, called "index.js"
 
-10. Finally in the stetp 7 of the course run this
+10. Finally run this
   ```bash
     node index.js
   ``` 
 11. Using the Postmant locate this route "http://localhost:49146", it must show "Hello World" message 
 
-12. Enable CORS
+12. Enable CORS.<br />
+  CORS is really useful when you're offering a public API and would like to controll the access to certain resources and how people use them.<br />
+  Also, if you want to use your own API or files on a different web page you can simply configure CORS to allow that, while still blocking others out.
   ```bash
   npm install cors --save
   ```
 
-13. Install with npm the "mysql"
+13. Install with npm the "mysql".<br />
+  It is the connection to MYSQL data base, installed in step 4 and configured in step 6.
   ```bash
   npm install mysql --save
   ```
 14. create in your project a direcory called "photos", there will store the PNG pictures (ej. anonymous.png, filename.png)
 
-15. Install with npm the "express-fileupload"
+15. Install with npm the "express-fileupload".<br />
+  Simple Express middleware for uploading files. It parses multipart/form-data requests, extracts the files if available, and make them available under req. files property. morgan - Node. js middleware for logging HTTP requests
   ```bash
   npm install express-fileupload --save
   ```
@@ -95,7 +96,9 @@ Exercises based on this site
 17. Add CSS and BUNDLE from this site 
   [Bootstrap Getting Started](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
 
-18. Install with npm the "react-router-dom" inside "my-app" directory
+18. Install with npm the "react-router-dom" inside "my-app" directory.<br />
+React Router is a collection of navigational components that compose declaratively with your application.<br />
+Whether you want to have bookmarkable URLs for your web app or a composable way to navigate in React Native, React Router works wherever React is rendering.
   ```bash
   cd ./my-app
   npm install react-router-dom 
@@ -113,48 +116,90 @@ After paste , do the correction of "fill-rule" by "fillRule"
 1. Move the files into the "api" directory <br /> 
   they are : index.js, package.json, package-lock.json, and node_modules (directory)
 
-2. Uninstall the "body-parser", it is not necessary, "express" in last version can replace this one
-  ```bash
-  cd ./api
-  npm uninstall body-parser
-  ```
-3. Install "nodemon" with "-D" in parameter, to not create a new element into "package.json" file
+2. Install "nodemon" with "-D" in parameter, to not create a new element into "package.json" file.<br />
+The nodemon Module is a module that develop node. js based applications by automatically restarting the node application when file changes in the directory are detected.<br />
+Nodemon does not require any change in the original code and method of development.
   ```bash
   cd ./api
   npm install nodemon -D 
   ```
-  Also I deleted all of "body-parser" from ./api/package.json and ./api/package-lock.json
   
-4. in package.json, put in scripts this new line
+3. in package.json, put in scripts this new line
   ```bash
   "dev": "nodemon src/index.js"
   ```
-5. Intall with npm the "fastest-validator"
+4. Intall with npm the "fastest-validator".<br />
+  Used to validate in API the structure or each field in "body" to process a request.
   ```bash
   cd ./api
   npm install fastest-validator --save
   ```  
-6. Intall with npm the "bcrypt"
+5. Intall with npm the "bcrypt".<br />
+  Bcrypt is a popular and trusted method for salt and hashing passwords.<br />
+  You have learned how to use bcrypt's NodeJS library to salt and hash a password before storing it in a database.<br />
+  You have also learned how to use the bcrypt compare function to compare a password to a hash, which is necessary for authentication.
   ```bash
   cd ./api
   npm install bcrypt --save
   ```
-7. Intall with npm the "jsonwebtoken"
+6. Intall with npm the "jsonwebtoken".<br />
+  JSON Web Tokens (JWT) are an RFC 7519 open industry standard for representing claims between two parties.<br />
+  For example, you can use jwt.io to decode, verify, and produce JWT. JWT specifies a compact and self-contained method for communicating information as a JSON object between two parties.
   ```bash
   cd ./api
   npm install jsonwebtoken --save
   ```
-8. Create two new files: auth.js and roles.js, into new directory llaed "middleware"
+7. Create two new files: auth.js and roles.js, into new directory called "middleware"
 
-9. Create into "routes" a new file called auth.js
+8. Create into "routes" a new file called auth.js
 
-  10. The way to use this new "token" is with a POST to "api/auth" using this json: { email: "im.user@no.matter.com", password: "$2b$15$zqY2Q4eOoGzFpZkHJz9HS.BSfXc/HM2E/yTWa1awFmTMgN2bE72Uu"} <br /> 
-  the best way to understand is with a video:
+9. The way to use this new "token" is with a POST to "api/auth".<br />
+Using this json: { email: "im.user@no.matter.com", password: "123"} <br /> 
+the best way to understand is with a video:
   [How to Create a Secure REST API with Node.js and Express](https://www.youtube.com/watch?v=Tw5LupcpKS4&t=340s)
+
+10. Intall with npm the "dotenv".<br />
+  It loads environment variables from a .env file.
+  ```bash
+  cd ./api
+  npm install dotenv --save
+  ```
+
+11. Intall with npm the "nodemailer".<br />
+  Nodemailer allow us to send email.
+  ```bash
+  cd ./api
+  npm install nodemailer --save
+  ```
+
+12. Create into "api" directory a file called ".env".<br />
+  REMEMBER: This file doesn't upload to repository.
+  ```java
+  #MYSQL CONNECTION
+  MYSQL_HOST=________
+  MYSQL_USER=________
+  MYSQL_PASS=________
+  MYSQL_D_B_=________
+  ```
+13. Create a "email.js" into "/api/utils" directory
+
+14. Add in ".env" file those fields:
+  ```java
+  #EMAIL INFORMATION
+  EMAIL_HOST=smtp.gmail.com
+  EMAIL_SERVICE=gmail
+  EMAIL_PORT=587
+  EMAIL_USER=________
+  EMAIL_PASS=________
+  EMAIL_FROM=________
+  EMAIL_TO=________
+  EMAIL_TOKEN=________
+  ```
 
 ## Note: Run first the API before to run the APP
 At the end, run this command to up the API, to check in Postman 'http://localhost:49146/api/',
   ```bash
+  cd ./api
   npm run dev
   ```
 And run this command to up the APP, using another Terminal, to check http://localhost:3000/
@@ -162,6 +207,10 @@ And run this command to up the APP, using another Terminal, to check http://loca
   cd ./my-app
   npm start
   ```
+### If you need to check the installed "node_modules" elements, use this :
+```
+  npm list --depth 0
+```
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
