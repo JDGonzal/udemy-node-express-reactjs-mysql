@@ -247,7 +247,9 @@ the best way to understand is with a video:
   ```bash
     npm install cross-fetch --save
   ```
-
+22. A lot of changes, to let use the Login and Submit. There are two modals, one just for Login, ana another for Register.<br /> 
+  The user can have access to everything if exist a previos login with an user with all roles. <br /> 
+  The user by default will be created as "viewer" (GET), the other permissions are "editor" (POST, PUT) and "admin" (DELETE)
 
 ## Note: Run first the API before to run the APP
 At the end, run this command to up the API, to check in Postman 'http://localhost:49146/api/',
