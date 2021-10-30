@@ -7,7 +7,6 @@ const mysqlConnection = mysql.createConnection({
   database: process.env.MYSQL_D_B_
 });
 
-const passwordEncrypt = require('./generatePassword.js');
 const sendEmail = require("./utils/email.js");
 
 mysqlConnection.connect(function(err){
@@ -16,11 +15,11 @@ mysqlConnection.connect(function(err){
     return;
   } else {
     console.log('DB is connected');
-    passwordEncrypt('123').then(console.log);
+
     const user ='anyName'; 
     //API_URL, same value of /my-app/src/variables.jsjj
-    const message = `${process.env.API_URL}user/verify/${user}/${process.env.EMAIL_TOKEN}`;
-    sendEmail(process.env.EMAIL_TO, "Verify Email", message);
+    const message = `${process.env.EMAIL_API_}user/verify/${user}/${process.env.EMAIL_TOKEN}`;
+    // sendEmail(process.env.EMAIL_TO, "Verify Email", message);
   }
 })
 

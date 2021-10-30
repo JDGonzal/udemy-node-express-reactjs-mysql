@@ -72,7 +72,6 @@ routeDepartment.put('/api/department', [auth, editor], (request,response)=>{
   }
   const v= new Validator();
   const validationResponse = v.validate(jsonValues,schema);
-
   if (validationResponse !== true){
     return response.status(400).json({
       message: "Validation Failed",

@@ -9,7 +9,12 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br />
+Change the port using [2. Modifying package.json](https://tech.amikelive.com/node-830/reactjs-changing-default-port-3000-in-create-react-app/comment-page-1/) Check for "Note for Windows user"
+  ```bash
+  "scripts": {
+      "start": "set PORT=8000 && react-scripts start",
+  ```
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
