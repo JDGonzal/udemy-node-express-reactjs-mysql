@@ -30,7 +30,7 @@ Exercises based on this site
   ```sql
     create table mytestdb.Department(
       DepartmentId int AUTO_INCREMENT,
-      DepartmentName nvarchar(500),
+      DepartmentName nvarchar(500) NOT NULL,
       PRIMARY KEY(DepartmentId));
 
     insert into mytestdb.Department(DepartmentName) values ('IT');
@@ -40,9 +40,9 @@ Exercises based on this site
 
     create table mytestdb.Employee(
       EmployeeId int AUTO_INCREMENT,
-      EmployeeName nvarchar(500),
-      Department nvarchar(500),
-      DateOfJoining datetime,
+      EmployeeName nvarchar(500) NOT NULL,
+      Department nvarchar(500) NOT NULL,
+      DateOfJoining datetime NOT NULL,
       PhotoFileName nvarchar(500),      
       PRIMARY KEY(EmployeeId));
 
@@ -60,7 +60,7 @@ Exercises based on this site
   ```bash
   npm install express --save
   ```
-9. create a file in root, called "index.js"
+9. Create a file in root, called "index.js"
 
 10. Finally run this
   ```bash
@@ -80,7 +80,7 @@ Exercises based on this site
   ```bash
   npm install mysql --save
   ```
-14. create in your project a direcory called "photos", there will store the PNG pictures (ej. anonymous.png, filename.png)
+14. Create in your project a direcory called "photos", there will store the PNG pictures (ej. anonymous.png, filename.png)
 
 15. Install with npm the "express-fileupload".<br />
   Simple Express middleware for uploading files. It parses multipart/form-data requests, extracts the files if available, and make them available under req. files property. morgan - Node. js middleware for logging HTTP requests
@@ -111,19 +111,14 @@ Whether you want to have bookmarkable URLs for your web app or a composable way 
 21. locate the icons in "https://icons.getbootstrap.com/", select "Copy HTML" option.<br /> 
 After paste , do the correction of "fill-rule" by "fillRule"
 
+
 ## Improvements
 
-1. Move the files into the "api" directory <br /> 
+1. Move the files into the "api" directory. <br /> 
   they are : index.js, package.json, package-lock.json, and node_modules (directory)
 
-2. Install "nodemon" with "-D" in parameter, to not create a new element into "package.json" file.<br />
-The nodemon Module is a module that develop node. js based applications by automatically restarting the node application when file changes in the directory are detected.<br />
-Nodemon does not require any change in the original code and method of development.
-  ```bash
-  cd ./api
-  npm install nodemon -D 
-  ```
-  
+
+
 3. in package.json, put in scripts this new line
   ```bash
   "dev": "nodemon src/index.js"
@@ -134,13 +129,12 @@ Nodemon does not require any change in the original code and method of developme
   cd ./api
   npm install fastest-validator --save
   ```  
-5. Intall with npm the "bcrypt".<br />
-  Bcrypt is a popular and trusted method for salt and hashing passwords.<br />
-  You have learned how to use bcrypt's NodeJS library to salt and hash a password before storing it in a database.<br />
-  You have also learned how to use the bcrypt compare function to compare a password to a hash, which is necessary for authentication.
+5. Intall with npm the "bcryptjs".<br />
+  Bcryptjs is Optimized bcrypt in JavaScript with zero dependencies. <br />
+  Compatible to the C++ bcrypt binding on node.js and also working in the browser.
   ```bash
   cd ./api
-  npm install bcrypt --save
+  npm install bcryptjs --save
   ```
 6. Intall with npm the "jsonwebtoken".<br />
   JSON Web Tokens (JWT) are an RFC 7519 open industry standard for representing claims between two parties.<br />
@@ -158,14 +152,14 @@ Using this json: { email: "im.user@no.matter.com", password: "123"} <br />
 the best way to understand is with a video:
   [How to Create a Secure REST API with Node.js and Express](https://www.youtube.com/watch?v=Tw5LupcpKS4&t=340s)
 
-10. Intall with npm the "dotenv".<br />
+10. Install with npm the "dotenv".<br />
   It loads environment variables from a .env file.
   ```bash
   cd ./api
   npm install dotenv --save
   ```
 
-11. Intall with npm the "nodemailer".<br />
+11. Install with npm the "nodemailer".<br />
   Nodemailer allow us to send email.
   ```bash
   cd ./api
@@ -196,13 +190,72 @@ the best way to understand is with a video:
   EMAIL_TOKEN=________
   ```
 
+15. Install with npm the "react-bootstrap".<br />
+  react-bootstrap, Change some elements as FORM, BUTTON, CONTROL
+  ```bash
+  cd ./my-app
+  npm install react-bootstrap --save
+  ```
+
+16. Create a new file called "login.css"
+
+17. Make some changes in "home.js"
+
+18. For the Login Process to DB , crete this table:
+  ```sql
+  CREATE TABLE mytestdb.Users (
+    userId int NOT NULL AUTO_INCREMENT,
+    email varchar(255) NOT NULL,
+    password varchar(255) DEFAULT NULL,
+    firstName varchar(255) ,
+    lastName varchar(255) ,
+    isActive bit DEFAULT 0 NOT NULL,
+    token varchar(255),
+    createdAt datetime NOT NULL,
+    updatedAt datetime NOT NULL,
+    PRIMARY KEY (userId),
+    UNIQUE KEY email (email));
+  ```
+19. To Roles admin create this table:
+  ```sql
+  CREATE TABLE mytestdb.Roles (
+    roleId int NOT NULL DEFAULT '0',
+    nameRole varchar(255) NOT NULL,
+    createdAt datetime NOT NULL,
+    updatedA datetime NOT NULL,
+    PRIMARY KEY (roleId));
+  INSERT INTO mytestdb.Roles VALUES ('1', 'viewer', NOW(), NOW());
+  INSERT INTO mytestdb.Roles VALUES ('2', 'editor', NOW(), NOW());
+  INSERT INTO mytestdb.Roles VALUES ('3', 'admin', NOW(), NOW());
+  ```
+20. We need a Table to mix the values between Users and Roles
+  ```sql
+  CREATE TABLE mytestdb.User_Roles (
+    createdAt datetime NOT NULL,
+    updatedAt datetime NOT NULL,
+    roleId int NOT NULL DEFAULT '0',
+    userId int NOT NULL DEFAULT '0',
+    PRIMARY KEY (`roleId`,`userId`),
+    KEY `userId` (`userId`),
+    CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES mytestdb.Roles (`roleId`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`userId`) REFERENCES mytestdb.Users (`userId`) ON DELETE CASCADE ON UPDATE CASCADE);
+  ```
+21. Install cross-fetch.<br /> 
+  cross-fetch is an universal WHATWG Fetch API for Node, Browsers and React Native. <br /> 
+  The scenario that cross-fetch really shines is when the same JavaScript codebase <br /> 
+  needs to run on different platforms. Platform agnostic: browsers, Node or React Native.
+  ```bash
+    npm install cross-fetch --save
+  ```
+
+
 ## Note: Run first the API before to run the APP
 At the end, run this command to up the API, to check in Postman 'http://localhost:49146/api/',
   ```bash
   cd ./api
   npm run dev
   ```
-And run this command to up the APP, using another Terminal, to check http://localhost:3000/
+And run this command to up the APP, using another Terminal, to check http://localhost:8000/
   ```bash
   cd ./my-app
   npm start

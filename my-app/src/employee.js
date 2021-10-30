@@ -16,7 +16,7 @@ export class Employee extends Component{
       DateOfJoining:"", 
       PhotoFileName:"anonymous.png",
       PhotoPath:variables.PHOTO_URL,
-      Token:localStorage.getItem("Token")
+      Token:localStorage.getItem("Token"),
     }
     this.site="employee";
     this.site2="department";
@@ -26,39 +26,39 @@ export class Employee extends Component{
   refreshList(){
     if (this.state.Token === undefined || this.state.Token === null){
       alert(this.alertMessage);
-    } else {
-      fetch(variables.API_URL+this.site,{
-        method:'GET',
-        headers:{
-          'Accept':'application/json',
-          'Content-Type':'application/json',
-          'x-auth-token': this.state.Token
-        }
-      })
-      .then(response=>response.json())
-      .then(data=>{
-        if (data === undefined || data === null || data.ok ===false){
-          alert(this.alertMessage)
-        } else {this.setState({employees:data})}
-      });    
-
-      fetch(variables.API_URL+this.site2,{
-        method:'GET',
-        headers:{
-          'Accept':'application/json',
-          'Content-Type':'application/json',
-          'x-auth-token': this.state.Token
-        }
-      })
-      .then(response=>response.json())
-      .then(data=>{
-        if (data !== undefined & data !== null & data.ok !==false){
-          this.setState({departments:data})
-        }
-      },(error)=>{
-        alert('Failed');
-      });
+      return;
     }
+    fetch(variables.API_URL+this.site,{
+      method:'GET',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+        'x-auth-token': this.state.Token
+      }
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      if(!data || data.ok ===false ){
+        alert(this.alertMessage);
+        return;
+      }
+      this.setState({employees:data})
+    })
+    fetch(variables.API_URL+this.site2,{
+      method:'GET',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+        'x-auth-token': this.state.Token
+      }
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      if(!data || data.ok ===false ){
+        return;
+      }
+      this.setState({departments:data})
+    })
   }
 
   componentDidMount(){
@@ -104,7 +104,8 @@ export class Employee extends Component{
       method:'POST',
       headers:{
         'Accept':'application/json',
-        'Content-Type':'application/json'
+        'Content-Type':'application/json',
+        'x-auth-token': this.state.Token
       },
       body:JSON.stringify({
         EmployeeName:this.state.EmployeeName,
@@ -115,7 +116,7 @@ export class Employee extends Component{
     })
     .then(res=>res.json())
     .then((result)=>{
-      alert(result);
+      !result.message?alert(result.error) :alert(result.message);
       this.refreshList();
     },(error)=>{
       alert('Failed');
@@ -127,7 +128,8 @@ export class Employee extends Component{
       method:'PUT',
       headers:{
         'Accept':'application/json',
-        'Content-Type':'application/json'
+        'Content-Type':'application/json',
+        'x-auth-token': this.state.Token
       },
       body:JSON.stringify({
         EmployeeId:this.state.EmployeeId,
@@ -139,7 +141,7 @@ export class Employee extends Component{
     })
     .then(res=>res.json())
     .then((result)=>{
-      alert(result);
+      !result.message?alert(result.error) :alert(result.message);
       this.refreshList();
     },(error)=>{
       alert('Failed');
@@ -152,12 +154,13 @@ export class Employee extends Component{
         method:'DELETE',
         headers:{
           'Accept':'application/json',
-          'Content-Type':'application/json'
+          'Content-Type':'application/json',
+          'x-auth-token': this.state.Token
         }
       })
       .then(res=>res.json())
       .then((result)=>{
-        alert(result);
+        !result.message?alert(result.error) :alert(result.message);
         this.refreshList();
       },(error)=>{
         alert('Failed');
@@ -171,7 +174,8 @@ export class Employee extends Component{
     formData.append("file", e.target.files[0], e.target.files[0].name);
     fetch(variables.API_URL+this.site+'/savefile',{
       method:'POST',
-      body:formData
+      body:formData,
+      'x-auth-token': this.state.Token
     })
     .then(res=>res.json())
     .then(data=>{

@@ -3,6 +3,7 @@ import './App.css';
 import {Home} from './home';
 import {Department} from './department';
 import {Employee} from './employee';
+import {Token} from './token';
 import {BrowserRouter, Route, Switch, NavLink} from 'react-router-dom';
 
 
@@ -38,6 +39,7 @@ function App() {
           <Route path='/login' component={Home}/>
           <Route path='/department' component={Department}/>
           <Route path='/employee' component={Employee}/>
+          <Route path='/token' component={Token}/>
         </Switch>
       </div>
     </BrowserRouter>

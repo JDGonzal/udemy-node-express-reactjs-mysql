@@ -67,24 +67,25 @@ export class Department extends Component{
   refreshList(){
     if (this.state.Token === undefined || this.state.Token === null){
       alert(this.alertMessage);
-    } else {
-      fetch(variables.API_URL+this.site,{
-        method:'GET',
-        headers:{
-          'Accept':'application/json',
-          'Content-Type':'application/json',
-          'x-auth-token': this.state.Token
-        }
-      })
-      .then(response=>response.json())
-      .then(data=>{
-        if(data === undefined || data === null || data.ok ===false ){
-          alert(this.alertMessage)
-        }else{
-          this.setState({departments:data});
-        }
-      })
-    };
+      return;
+    }
+    fetch(variables.API_URL+this.site,{
+      method:'GET',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+        'x-auth-token': this.state.Token
+      }
+    })
+    .then(response=>response.json())
+    .then(data=>{
+      if(!data || data.ok ===false ){
+        alert(this.alertMessage);
+        return;
+      }
+      this.setState({departments:data, departmentsWithoutFilter:data});
+      // console.log(this.departments,data,this.departmentsWithoutFilter);
+    })
   }
 
   componentDidMount(){
@@ -116,7 +117,8 @@ export class Department extends Component{
       method:'POST',
       headers:{
         'Accept':'application/json',
-        'Content-Type':'application/json'
+        'Content-Type':'application/json',
+        'x-auth-token': this.state.Token
       },
       body:JSON.stringify({
         DepartmentName:this.state.DepartmentName
@@ -124,7 +126,7 @@ export class Department extends Component{
     })
     .then(res=>res.json())
     .then((result)=>{
-      alert(result);
+      !result.message?alert(result.error) :alert(result.message);
       this.refreshList();
     },(error)=>{
       alert('Failed');
@@ -136,7 +138,8 @@ export class Department extends Component{
       method:'PUT',
       headers:{
         'Accept':'application/json',
-        'Content-Type':'application/json'
+        'Content-Type':'application/json',
+        'x-auth-token': this.state.Token
       },
       body:JSON.stringify({
         DepartmentId:this.state.DepartmentId,
@@ -145,7 +148,8 @@ export class Department extends Component{
     })
     .then(res=>res.json())
     .then((result)=>{
-      alert(result);
+      console.log(result);
+      !result.message?alert(result.error) :alert(result.message);
       this.refreshList();
     },(error)=>{
       alert('Failed');
@@ -158,12 +162,14 @@ export class Department extends Component{
         method:'DELETE',
         headers:{
           'Accept':'application/json',
-          'Content-Type':'application/json'
+          'Content-Type':'application/json',
+          'x-auth-token': this.state.Token
         }
       })
       .then(res=>res.json())
       .then((result)=>{
-        alert(result);
+        console.log(result);
+        !result.message?alert(result.error) :alert(result.message);
         this.refreshList();
       },(error)=>{
         alert('Failed');
@@ -178,6 +184,7 @@ export class Department extends Component{
       DepartmentName,
       DepartmentId
     }=this.state;
+
     return(
       <div>
         <button type="button" className="btn btn-primary m-2 float-end" data-bs-toggle="modal" data-bs-target="#exampleModal"
