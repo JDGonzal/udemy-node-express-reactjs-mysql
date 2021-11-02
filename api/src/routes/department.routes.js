@@ -6,7 +6,7 @@ const Validator = require('fastest-validator');
 // Import middlewares
 const auth = require('../middleware/auth.js');
 const { admin, editor, viewer } = require("../middleware/roles.js");
-const mysqlConnection = require('../database.js');
+const mysqlConnection = require('../utils/database.js');
 
 routeDepartment.get('/api/department', [auth, viewer], (request,response)=>{
   var query= `SELECT * from mytestdb.Department`;

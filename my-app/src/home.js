@@ -63,7 +63,6 @@ export class Home extends Component {
 
   onChangeEmail = async(e) => {
     await this.setState({ email: e.target.value });
-    await console.log('email: ',this.state.email,e.target.value );
   }
 
   onChangePassword = async(e) => {
@@ -151,7 +150,9 @@ export class Home extends Component {
           this.setState({ auth: data })
           console.log(data);
           if (!this.state.auth.token) {
-            alert('Failed');
+            !this.state.auth.message
+              ?(!this.state.auth.error?alert('Failed'):alert(this.state.auth.error))
+              :alert(this.state.auth.message);
           } else {
             localStorage.setItem("Token", this.state.auth.token);
             // eslint-disable-next-line react/no-direct-mutation-state
@@ -194,7 +195,7 @@ export class Home extends Component {
                   firstName: this.state.firstName,
                   lastName: this.state.lastName,
                   Roles: this.state.RolesArray,
-                  Token: this.state.Token,
+                  TokenExternal: this.state.Token,
                 })
               })
                 .then(res => res.json())
@@ -266,7 +267,9 @@ export class Home extends Component {
                         : null}
                       <Form.Group size="lg" controlId="password">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" value={password} onChange={this.onChangePassword} placeholder="Password" />
+                        <Form.Control type="password" value={password} onChange={this.onChangePassword} placeholder="Password"
+                        name="password" aria-labelledby="password-uid4-label password-uid4-helper password-uid4-valid password-uid4-error" 
+                        autocomplete="current-password" spellcheck="false"/>
                       </Form.Group>
                       {modalTitle === 'Register' ?
                         <Form.Group size="lg" controlId="passwordAgain">

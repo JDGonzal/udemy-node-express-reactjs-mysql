@@ -268,7 +268,7 @@ export class Employee extends Component{
                     <div className="input-group mb-3">
                       <span className="input-group-text">Department</span>
                       <select className="form-select" value={Department} onChange={this.onChangeDepartment}>
-                        <option hidden selected> -- select an option -- </option>
+                        <option hidden defaultValue> -- select an option -- </option>
                         {departments.map(dep=><option key={dep.DepartmentId}>
                           {dep.DepartmentName}
                         </option>)}

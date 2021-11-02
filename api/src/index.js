@@ -16,6 +16,7 @@ app.use(express.json()); // app.use(bodyParser.json());
 app.use(require('./routes/department.routes.js'));
 app.use(require('./routes/employee.routes.js'));
 app.use(require('./routes/auth.routes.js'));
+app.use(require('./routes/roles.routes.js'));
 
 //Starting the server
 app.listen(app.get('port'),()=>{
